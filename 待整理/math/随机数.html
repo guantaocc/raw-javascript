@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机数</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    html,body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    // 1. 球的颜色
+    // 2. 球的区间
+    // 3. 速度: 0.05px - 0.5px
+    // 4. 透明度
+    function Particles(){
+      this.colors = ['255, 255, 255', '255, 99, 71', '19, 15, 19']
+      this.minRadius = 5;
+      this.maxRadius = 35;
+      this.minOpacity = .5;
+      this.maxOpacity = 0.05;
+      this.minSpeed = .005;
+      this.maxSpeed = .5;
+      this.num = 75;
+      this.canvas = document.getElementById('canvas')
+      this.ctx = this.canvas.getContext('2d')
+    }
+    Particles.prototype = {
+      init(){
+        this.render()
+        this.createCircle()
+      },
+      _rand(min, max){
+        return Math.random() * (max - min) + min
+      },
+      _randomInt(min, max){
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      },
+      render(){
+        const self = this
+        const innerWidth = $(window).width()
+        const innerHeight = $(window).height()
+        self.canvas.width = innerWidth
+        self.canvas.height = innerHeight
+      },
+      createCircle(){
+        const particle = []
+        // 生成
+        for(let i = 0; i < this.num; i++){
+          particle[i] = {
+            radius: this._rand(this.minRadius, this.maxRadius),
+            xPos: this._rand(0, this.canvas.width),
+            yPos: this._rand(0, this.canvas.height),
+            color: `rgb(${this.colors[this._randomInt(0, 2)]})`,
+            xVelocity: this._rand(this.minSpeed, this.maxSpeed),
+            yVelocity: this._rand(this.minSpeed, this.maxSpeed)
+          }
+          this.draw(particle, i)
+        }
+        this.animate(particle)
+      },
+      draw(particle, i){
+        const ctx = this.ctx
+        const item = particle[i]
+        ctx.beginPath()
+        ctx.arc(item.xPos, item.yPos, item.radius, 0, Math.PI * 2, false)
+        // 闭合对象
+        // ctx.stroke()
+        // 填充
+        // 径向渐变
+        let grd = ctx.createRadialGradient(item.xPos, item.yPos, item.radius, item.xPos, item.yPos, item.radius / 1.25)
+        grd.addColorStop(0, item.color)
+        grd.addColorStop(1, 'transparent')
+        ctx.fillStyle = grd
+        ctx.fill()
+      },
+      animate(particle){
+        // ctx
+        const ctx = this.ctx
+        setInterval(() => {
+          ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+          for(let i = 0; i < particle.length; i++){
+            let item = particle[i]
+            item.xPos += item.xVelocity
+            item.yPos -= item.yVelocity
+            // 到边界
+            if(item.xPos  >= this.canvas.width + item.radius || item.yPos >= this.canvas.height + item.radius){
+              this.reset(particle, i)
+            }else {
+             this.draw(particle, i)
+            }
+          }
+        }, 1000 / 60)
+      },
+      reset(particle, i){
+        particle[i].xPos = this._rand(0, this.canvas.width)
+        particle[i].yPos = this._rand(0, this.canvas.height)
+        this.draw(particle, i)
+      }
+    }
+    new Particles().init()
+  </script>
+</body>
+</html>

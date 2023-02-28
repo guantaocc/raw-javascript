@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变换</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .box {
+      margin-left: 100px;
+      margin-top: 100px;
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background: #979797;
+      /* transform: translateX(-50px) rotateZ(30deg); */
+      transition: transform .2s ease .5s;
+      /* transform: rotate3d(45, 45, 0, 45deg); */
+    }
+
+    .box:hover {
+      transform: scale(1.5);
+      /* transform-origin: left top; */
+    }
+    /**
+     rotate
+     rotate3d: rotate3d(45, 45, 0, 45deg) // 指定平面的轴进行旋转
+
+     translate
+     skew: 扭曲变形
+
+     transform: 变形有先后的顺序变化
+     
+     // 设置垂直变换的中心值
+     transform-origin: left top / 0% - 100%
+    */
+
+    /*
+      transition: 过渡
+      transition: all .2s ease-in-out 1s;
+      // property/duration/timing-function/delay
+
+    */
+  </style>
+</head>
+<body>
+  <div class="box">
+
+  </div>
+  <script>
+     const box = document.getElementsByClassName('box')[0]
+     console.log(box.getBoundingClientRect())
+    //  const scale = 0.9
+    //  // 中心放缩  放缩后的坐标计算
+    //  console.log(box.offsetLeft + box.offsetLeft * (1 - scale))
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      margin: 100px 0 0 100px;
+    }
+    .tabs {
+      height: 28px;
+      color: #000;
+      line-height: 28px;
+    }
+    .tabs .tab-item {
+      display: inline-block;
+      font-size: 14px;
+      padding: 0 10px;
+      border-right: 1px solid #000;
+      cursor: pointer;
+    }
+    .tabs .tab-item:last-child {
+      border: none;
+    }
+    .tab-item.current {
+      background: #000;
+      color: #fff;
+    }
+    .pages {
+      height: 100px;
+    }
+    .page-item {
+      font-size: 16px;
+      display: none;
+    }
+    .page-item.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab-item current">压缩</div>
+      <div class="tab-item">猪妹</div>
+      <div class="tab-item">豹女</div>
+    </div>
+    <div class="pages">
+      <div class="page-item active">page1</div>
+      <div class="page-item">page2</div>
+      <div class="page-item">page3</div>
+    </div>
+  </div>
+  <script>
+    ;(function (document){
+      var tabEle = document.getElementsByClassName('tabs')[0],
+          pageEle = document.getElementsByClassName('pages')[0];
+      var tabItems = tabEle.getElementsByClassName('tab-item'),
+          pageItems = pageEle.getElementsByClassName('page-item'),
+          curIndex = 0;
+      function tabClick(e){
+        var event = e || window.Event
+        var tar = event.target || event.srcElement
+        tabItems[curIndex].className = 'tab-item'
+        pageItems[curIndex].className = 'page-item'
+        curIndex = Array.prototype.indexOf.call(tabItems, tar)
+        tabItems[curIndex].className += ' current'
+        pageItems[curIndex].className += ' active'
+      }
+      function bindEvent(el){
+        el.addEventListener('click', tabClick, false)
+      }
+      bindEvent(tabEle)
+    })(document)
+  </script>
+</body>
+</html>

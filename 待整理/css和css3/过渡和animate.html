@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>过渡和animate</title>
+  <style>
+    .box {
+      /* 
+        二次贝塞尔曲线
+        如果是线性 linear cubic-bezier(0, 0, 1, 1)
+      */
+      transition: all .2s cubic-bezier(0.1, 0.2, 0.9, 0.5);
+      /* 
+        perspective
+        或者定义在 transform上
+        transform: perspective(500px) rotateX(-100px)
+      */
+      perspective: 500px;
+      perspective-origin: left top;
+      /* 背面不可见 visible|hidden */
+      /* backface-visibility: hidden; */
+
+    }
+    @keyframes move {
+      0% {
+        left: 0
+      }
+      100% {
+        left: 100px;
+      }
+    }
+    .box1 {
+      position: absolute;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      background-color: #979797;
+      /* animation 可定义重复的动作
+        animation顺序
+      */
+      animation-name: move;
+      animation-duration: 2s;
+      animation-timing-function: ease-in-out;
+      /* 动画方向
+       normal/reverse/alternate
+       alternate: 交替运行
+      */
+      animation-direction: alternate-reverse;
+      /* 
+        动画的模式
+        设置 CSS 动画在执行之前和之后如何将样式应用于其目标
+        none/forwards/backwards/both
+        forwards 可以将css样式应用于最后一帧
+      */
+      animation-fill-mode: normal;
+      /* 1 ~ infinite */
+      animation-iteration-count: infinite;
+    }
+
+    .transform-3d {
+      /* 决定元素 transform 为 3d的变化 */
+      transform-style: preserve-3d;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <div class="box1"></div>
+  
+  <script>
+
+  </script>
+</body>
+</html>

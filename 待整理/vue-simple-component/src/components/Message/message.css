@@ -1,0 +1,19 @@
+.el-message {
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  color: #000;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 1px solid #09f670;
+  transform: translateX(-50%);
+  transition: opacity 0.3s, transform .4s, top 0.4s;
+}
+
+.el-fade-enter-active,
+.el-fade-leave-active {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}

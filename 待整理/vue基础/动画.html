@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>traisiton</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <style>
+    /* 插入之前 */
+    .v-enter {
+      opacity: 0;
+    }
+    /* 插入下一帧 */
+    .v-enter-active {
+      transition: opacity 2s ease;
+    }
+    /* 移除 */
+    .v-leave-to {
+      opacity: 1;
+    }
+    .v-leave-active {
+      transition: opacity 2s ease;
+    }
+
+    /* 配合 animate.css */
+    .an-enter-active {
+      animation: bounce 2s;
+    }
+
+    /* 配合自定义动画 */
+    @keyframes slide-in {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <transition>
+      <h1 v-if="show" class="show">title</h1>
+    </transition>
+    <!-- css animate enter-active-class leave-active-class -->
+    <transition name="an">
+       <h2 v-if="show">animation title</h2>
+    </transition>
+    
+    <!-- 配合 velocity.js -->
+    <button @click="showTitle">show title</button>
+
+    <!-- transition group -->
+    <ul>
+      <transition-group>
+        <li v-for="item in list" :key="item.id">
+          <span>{{item.title}}</span>
+          <button @click="removeListItem(item)">remove</button>
+        </li>
+      </transition-group>
+    </ul>
+    <button @click="addListItem">add list item</button>
+  </div>
+  <script>
+     /**
+     * 关于 transition 类和事件
+     * v-enter / v-enter-active: 元素插入之前
+     * v-enter-to: 元素插入下一帧添加类, 移除 v-enter
+     * 过渡动画结束: 移除所有类
+     * v-leave / v-leave-active: 元素离开之前
+     * v-leave-to: 元素离开下一帧
+     * 动画结束: 移除所有类
+     */
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <script>
+    let id = 0
+    const vm = new Vue({
+      el: '#root',
+      data(){
+        return {
+          show: false,
+          list: []
+        }
+      },
+      methods: {
+        showTitle(){
+          this.show = !this.show
+        },
+        // transiton 动画钩子 
+        // before-enter enter after-enter enter-cancelled
+        // before-leave leave after-leave leave-cancelled
+        addListItem(){
+          this.list.push({
+            title: `item${id}`,
+            id: id++
+          })
+        },
+        removeListItem(item){
+          let index = this.list.indexOf(item)
+          console.log(index)
+          this.list.splice(index, 1)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

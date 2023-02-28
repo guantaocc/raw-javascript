@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js距离</title>
+  <style>
+    .main {
+      width: 600px;
+      height: 100px;
+      margin: 200px auto;
+      border: 1px solid #000;
+    }
+
+    .box {
+      float: left;
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="box box1"></div>
+    <div class="box box2"></div>
+    <div class="box box3"></div>
+    <div class="box box4"></div>
+    <div class="box box5"></div>
+    <div class="box box6"></div>
+  </div>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    const boxs = $('.box')
+    function getTancZ(x, y){
+      return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+    }
+    function getDistance(e, dom){
+      x = Math.abs(e.clientX - dom.offset().left - 50 / 2)
+      y = Math.abs(e.clientY - dom.offset().top - 50 / 2)
+      c = getTancZ(x, y)
+      return c
+    }
+    $('.main').on('mousemove', function(e){
+      for(let i = 0; i < boxs.length; i++){
+        let item = $(boxs[i])
+        let distance = getDistance(e, item)
+        d = Math.min(distance, 200)
+        let scale = ((200 - d) / 200 / 5 + 1) * 50
+        item.css({
+          width: scale + 'px',
+          height: scale + 'px' 
+        })
+      }
+    })
+  </script>
+</body>
+</html>

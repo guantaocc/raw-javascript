@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-js</title>
+</head>
+<body>
+  <div id="root">
+    <div :style="styles" @click="hello"></div>
+    <div @click="changeNative"></div>
+    <todo-list content="xxxx" name="333"></todo-list>
+    <todo-list></todo-list>
+    <!-- 动态组件如何保持缓存 keep-alive -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <script>
+    const TodoList = Vue.component("TodoList", {
+      // 非 prop, 配合 $attrs
+      inheritAttrs: false,
+      template: `
+        <div class="list-content" @click="change">child todo list</div>'
+      `,
+      props: {
+        content: {
+          validator: function(value){
+            return typeof value === 'string'
+          }
+        }
+      },
+      mounted(){
+        this.$on('change', (value) => {
+          console.log('on事件的监听自身事件', value)
+        })
+      },
+      methods: {
+        change(){
+          this.$emit('change', 'change-bus')
+        }
+      }
+    })
+    const vm = new Vue({
+      el: '#root',
+      components: {
+        TodoList
+      },
+      data: {
+        title: 'hello world',
+        styles: {
+          color: 'red'
+        }
+      },
+      methods: {
+        hello(){
+
+        },
+        changeNative(){
+          console.log('this is native click')
+        }
+      }
+    })
+  </script>
+</body>
+</html>

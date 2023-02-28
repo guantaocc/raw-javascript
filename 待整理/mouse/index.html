@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #container {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      padding: 20px;
+      background: red;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script>
+    // 鼠标行为拖拽，缩放 mouse事件处理
+    /*
+      坐标系处理:
+      clientX/clientY: 相对于鼠标点击的视口的坐标系
+      layerX/layerY: 同pageX/pageY (IE11以下兼容性问题)
+      screenX/screenY: 鼠标相对于屏幕的坐标
+      x/y: clientX/clientY相同, 老版firefox不支持
+      pageX/pageY: 相对于 document文档的坐标系,包含滚动条 IE9以下不支持
+      offsetX/offsetY: 鼠标元素相对于块元素的坐标 safari不包括
+    */
+
+    /*
+     鼠标拖拽
+     mousedown
+     mousemove
+     mouseup
+    */
+   const containerBox = document.getElementById('container')
+   containerBox.onmousedown = function(e){
+    // 盒子左上角 与 鼠标位置重合
+    const getPosition = function(element){
+      return {
+        left: parseInt(window.getComputedStyle(element).left.replace(/px/g, '')),
+        top: parseInt(window.getComputedStyle(element).top.replace(/px/g, '')),
+      }
+    }
+    const offset = {
+      x: e.pageX - getPosition(containerBox).left,
+      y: e.pageY - getPosition(containerBox).top
+    }
+    console.log('offset', offset)
+    document.onmousemove = function(e){
+      let x = e.pageX - offset.x
+      let y =  e.pageY - offset.y
+      // 边界处理
+      const max_x = window.innerWidth - (containerBox.offsetWidth)
+      const max_y = window.innerHeight - (containerBox.offsetHeight)
+      if(x <= 0){
+        x = 0
+      }
+      if(y <= 0){
+        y = 0
+      }
+      x = x >= max_x ? max_x : x
+      y = y >= max_y ? max_y : y
+      
+      console.log(x, y)
+      containerBox.style.left = x + 'px'
+      containerBox.style.top = y + 'px'
+    }
+    document.onmouseup = function(e){
+      document.onmousemove = null
+      document.onmouseup = null
+    }
+   }
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>向量判断</title>
+</head>
+<body>
+  <div></div>
+  <script>
+    function pointInTriangle(x0, y0, x1, y1, x2, y2, x3, y3) {
+      // 判断一个点在三角形之内(边界也符合)
+      // A, B, C  M(x0, y0)
+      // 向量 MA * MB  MB * MC  MC * MA 
+      let divisor = (y2 - y3)*(x1 - x3) + (x3 - x2)*(y1 - y3);
+      let a = ((y2 - y3)*(x0 - x3) + (x3 - x2)*(y0 - y3)) / divisor;
+      let b = ((y3 - y1)*(x0 - x3) + (x1 - x3)*(y0 - y3)) / divisor;
+      let c = 1 - a - b;
+      // 叉乘方向相同
+      return a >= 0 && a <= 1 && b >= 0 && b <= 1 && c >= 0 && c <= 1;
+    }
+  </script>
+</body>
+</html>

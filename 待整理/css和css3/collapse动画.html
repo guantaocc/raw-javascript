@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>collapse</title>
+  <style>
+    .width-box {
+      display: inline-block;
+      width: 50px;
+      text-align: center;
+      overflow: hidden;
+      transition: all .5s ease-in-out;
+    }
+    .width-box.collapse {
+      width: 0;
+    }
+    .height-box {
+      display: block;
+      overflow: hidden;
+      transition: all .5s ease-in-out;
+    }
+    .height-box.collapse {
+      height: 0;
+    }
+  </style>
+</head>
+<body>
+  <button id="collapse"></button>
+  <br />
+  <span class="width-box">xxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+  <br/>
+  <div class="height-box">
+    <div>item1</div>
+    <div>item2</div>
+    <div>item2</div>
+    <div>item2</div>
+    <div>item2</div>
+    <div>item2</div>
+    <div>item2</div>
+  </div>
+  <script>
+    let widthBox = document.getElementsByClassName('width-box')[0];
+    // 高度box
+    let heightBox = document.getElementsByClassName('height-box')[0]
+    let collapseBtn = document.getElementById('collapse')
+    collapseBtn.innerText = '折叠'
+    let collapse = false
+
+    // 先计算 collapse的高度
+    let boxHeight = heightBox.offsetHeight
+    heightBox.style.height = boxHeight + 'px'
+
+    collapseBtn.onclick = function(e){
+      if(!collapse){
+        widthBox.classList.add('collapse')
+        // 如果是高度的话需要先加上高度
+        heightBox.style.height = 0
+        collapseBtn.innerText = '展开'
+      }else {
+        widthBox.classList.remove('collapse')
+        heightBox.style.height = boxHeight + 'px'
+        collapseBtn.innerText = '折叠'
+      }
+      collapse = !collapse
+    }
+  </script>
+</body>
+</html>

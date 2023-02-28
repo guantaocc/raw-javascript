@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运动的方式</title>
+  <style>
+    body, html {
+      margin: 0;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position: relative;
+    }
+    .box::after {
+      content: '';
+      position: fixed;
+      left: 300px;
+      width: 1px;
+      top: 0;
+      height: 100px;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box"></div>
+  <button id="btn">button</button>
+  <script>
+    const oBtn = document.getElementById('btn')
+    const oDiv = document.getElementById('box')
+    let timer
+    oBtn.onclick = function(){
+      const left = 0
+      let speed = 300 - odiv.offsetLeft > 0 ? 7 : -7
+      clearInterval(timer)
+      timer = setInterval(() => {
+        if(Math.abs(300 - oDiv.offsetLeft) < Math.abs(speed)){
+          clearInterval(timer)
+          oDiv.style.left = 300 + 'px'
+          return
+        }
+        oDiv.style.left = oDiv.offsetLeft + speed + 'px'
+      }, 30)
+    }
+  </script>
+</body>
+</html>

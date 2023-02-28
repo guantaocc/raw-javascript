@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文字和颜色</title>
+  <style>
+    .text {
+      text-shadow: 2px 2px 3px red, -2px -2px 3px green;
+    }
+    .box {
+      padding: 30px;
+      margin: 30px;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 2px -2px red;
+    }
+    .p-text {
+      /* 
+        word-wrap: 
+           normal: 英文 半角空格/英文连字符 会换行, 中文默认为一个英文单词换行
+           break-word: 单词会超出换行，空格仍会换行
+        white-space:
+           normal: 空白正常展示并合并
+           pre: 原样展示 空格和换行都解析
+           pre-wrap: 解析空格和换行. 正常转行
+           pre-line: 空格合并保留换行, 但不进行换行
+           nowrap: 不进行换行
+        word-break:
+           normal
+           break-all: 超出强制截断，不以单词进行截断
+           keep-all: 根据单词进行换行展示
+      */
+      width: 120px;
+      /* word-break: break-all; */
+      white-space: pre-line;
+    }
+    .gradient-box {
+      /*
+        背景渐变
+        线性渐变
+        linear-gradient: [direction] [color]
+        examples: 
+          to bottom, green 0% 直角 
+          to top right 倾斜角
+          0 - 360deg 倾斜角度
+        // 径向渐变
+        radial-gradient
+          circle at top center 圆心渐变
+          ellipse 50px 25px at center center 定义圆的大小
+        repeating-linear-gradient
+          重复渐变并进行填充
+          可更改渐变色起点
+      */
+      width: 100px;
+      height: 100px;
+      /* background-image: linear-gradient(45deg, red 0%, yellow 50%, green 100%); */
+      /* background-image: radial-gradient(ellipse 50px 25px at center center, yellow, blue); */
+      background-image: repeating-linear-gradient(to bottom right, red 0, green 10%, yellow 10%, blue 20%);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <span class="text">444</span>
+    <p class="p-text">erwerw   dfsdfs       
+      enrewrwerwersdfsdfsdffdsfdfsdfsdfsdfsdfdsfsdfsdfsdf </p>
+  </div>
+  <div class="gradient-box"></div>
+  <pre>
+    <code>
+      var a = document.getElementById("3")
+    </code>
+  </pre>
+</body>
+</html>

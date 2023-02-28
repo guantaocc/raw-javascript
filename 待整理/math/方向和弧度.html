@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弧度</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      margin: 100px 0 100px 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <script>
+    // 求 box 鼠标移入的方向
+    const box = document.getElementsByClassName('box')[0]
+    box.addEventListener('mouseenter', (e) => {
+      const boxWidth = box.getBoundingClientRect().width
+      const boxHeight = box.getBoundingClientRect().height
+      // 获取盒子中心坐标
+      let x = e.clientX - box.offsetLeft - boxWidth / 2
+      let y = e.clientY - box.offsetTop - boxHeight / 2
+
+      // 放缩盒子, 使 x, y坐标为正方形放缩
+      
+      x = boxWidth > boxHeight ? x * boxHeight / boxWidth : 1
+      y = boxHeight > boxWidth ? y * boxWidth / boxHeight : 1
+      // 计算角度
+      // 弧度转角度 x * 180 / Math.PI
+      // 角度转弧度 x * Math.PI / 180
+
+      // 转换角度负值到正值
+      const deg = Math.atan2(y, x) * 180 / Math.PI + 180
+      console.log(deg)
+
+      // 根据弧度判断上下左右 方向
+      // 角度区间 方向判断
+      let direction = Math.round(radius / 90)
+      //  0, 4 左
+      //  1 上
+      //  2 右
+      //  3 下  
+    })
+  </script>
+</body>
+</html>
