@@ -8,3 +8,4 @@ export function windowToCanvas(canvas, mouseEvent){
     y: y - rect.top * (canvas.height / rect.height)
   }
 }
+
