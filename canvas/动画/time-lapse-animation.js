@@ -11,6 +11,8 @@ startBtn.onclick = function () {
 
 pauseBtn.onclick = function () {};
 
+let startTimestamp
+
 class Target {
   constructor() {
     this.timerSetting = 1;
@@ -56,16 +58,6 @@ function erase() {
 let lastTime = 0
 
 function draw(now) {
-  // 需要每帧移动像素
-  // fps: 帧 / 毫秒
-  // 像素 / 帧 = (像素 / 秒) * (秒 / 帧)
-
-  // 如何计算当前帧
-  let fps = 60
-  // 20 / 60
-  // 60帧 0.3 * 60 = 18 * 5 = 100px
-  let delta = target.velocity / fps;
-  target.update(delta);
   context.save();
   context.beginPath();
   context.fillStyle = "red";
@@ -77,14 +69,30 @@ function draw(now) {
   );
   context.fill();
   context.restore();
-  lastTime = now
 }
 
-function animate(time) {
+function animate(now) {
   if (target.isRunning()) {
     erase();
-    draw(time);
-    target.raf = window.requestAnimationFrame(animate);
+    
+    if(!startTimestamp){
+      startTimestamp = now
+    }
+
+    // 如何计算当前帧?
+    // let dt = (now - startTimestamp) / 1000
+    // let fps = 1 / dt
+
+    // 消耗的时间s
+    const elapseTime = (now - startTimestamp) / 1000
+    target.width = Math.min(target.velocity * elapseTime, target.maxWidth)
+
+    draw(now);
+
+    if(elapseTime < target.timerSetting){
+      // 动画结束
+      target.raf = window.requestAnimationFrame(animate);
+    }
   }
 }
 
